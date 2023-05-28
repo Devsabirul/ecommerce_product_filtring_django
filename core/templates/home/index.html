@@ -1,0 +1,212 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Shop Page{% endblock title %}
+{% block body %}
+<style>
+    body {
+        background-color: #ececec;
+    }
+
+    div#pricing_wrap p {
+        line-height: 3px;
+    }
+</style>
+<header>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="banner">
+                <img class="w-100 h-100" src="{% static 'images/banner.png' %}" alt="Banner">
+            </div>
+        </div>
+    </div>
+
+</header>
+<section id="main_content">
+    <div class="container-fluid pt-5">
+        <div class="row gx-5 px-xl-5">
+            <!-- Shop Sidebar Start -->
+            <div class="col-lg-3 col-md-12"
+                style="padding-left: 35px;padding-right: 35px;background: white;padding-top: 25px;border-radius: 10px;"
+                id="sidebarwrap">
+                <!-- Price Start -->
+                <div id="pricing_wrap">
+                    <p><b>Price</b></p>
+                    <div class="pricing_ d-flex justify-content-between">
+                        <input style="width: 35%!important;" class="w-25" type="number" min="1" name="form_price"
+                            id="form_price" placeholder="125">
+                        <span>To</span>
+                        <input style="width: 35%!important;" class="w-25" type="number" min="1" name="to_price"
+                            id="to_price" placeholder="2500">
+                        <button class="btn btn-danger btn-sm">Go</button>
+                    </div>
+
+                    <hr>
+                </div>
+                <!-- Price End -->
+                <!-- Brands Start -->
+                <div class=" mb-4 mt-4">
+                    <h6 class="font-weight-bold">BRANDS</h6>
+                    {% for brands in brands %}
+                    <div class="form-check">
+                        <input class="form-check-input brands" type="checkbox" data-filter="brands" value="{{brands}}"
+                            id="flexCheckDefault{{forloop.counter}}">
+                        <label class="form-check-label" for="flexCheckDefault{{forloop.counter}}">
+                            {{brands}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <!-- Brands End -->
+
+                <!-- Earphone Start -->
+                <div class=" mb-4 mt-4">
+                    <h6 class="font-weight-bold">Categories</h6>
+                    {% for categories in categories %}
+                    <div class="form-check">
+                        <input class="form-check-input categories_" type="checkbox" data-filter="categories"
+                            value="{{categories}}" id="flexCheckDefault_{{forloop.counter}}">
+                        <label class="form-check-label" for="flexCheckDefault_{{forloop.counter}}">
+                            {{categories}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <!-- Earphone End -->
+                <!-- PRODUCTS TYPE Start -->
+                <div class=" mb-4 mt-4">
+                    <h6 class="font-weight-bold">PRODUCTS TYPE</h6>
+                    {% for producttype in product_type %}
+                    <div class="form-check">
+                        <input class="form-check-input producttype" type="checkbox" data-filter="producttype"
+                            value="{{producttype}}" id="producttype{{forloop.counter}}">
+                        <label class="form-check-label" for="producttype{{forloop.counter}}">
+                            {{producttype}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <!-- PRODUCTS TYPE End -->
+                <!-- SELLER TYPE Start -->
+                <div class=" mb-4 mt-4">
+                    <h6 class="font-weight-bold">SELLER</h6>
+                    {% for seller in seller %}
+                    <div class="form-check">
+                        <input class="form-check-input seller" type="checkbox" data-filter="seller" value="{{seller}}"
+                            id="seller{{forloop.counter}}">
+                        <label class="form-check-label" for="seller{{forloop.counter}}">
+                            {{seller}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <!-- SELLER TYPE End -->
+                <!-- WARRANTY TYPE Start -->
+                <div class=" mb-4 mt-4">
+                    <h6 class="font-weight-bold">WARRANTY PERIOD</h6>
+                    {% for warranty in warranty %}
+                    <div class="form-check">
+                        <input class="form-check-input WARRANTY" type="checkbox" data-filter="warranty"
+                            value="{{warranty}}" id="WARRANTY{{forloop.counter}}">
+                        <label class="form-check-label" for="WARRANTY{{forloop.counter}}">
+                            {{warranty}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- WARRANTY TYPE End -->
+            </div>
+            <!-- Shop Sidebar End -->
+
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-12">
+                <div class="row pb-3">
+                    <div class="col-12">
+                        <div class="d-flex bg-light border-1 p-2 align-items-center justify-content-between"
+                            style="border-radius: 10px;">
+                            <h6>
+                                {% if filter_product %}
+                                THIS PAGE HAS {{filter_product|length}} PRODUCTS
+                                {% else %}
+                                THIS PAGE HAS {{product|length}} PRODUCTS
+                                {% endif %}
+                            </h6>
+                            <select style="padding: 2px;outline: none;">
+                                <option value="1">sort by</option>
+                                <option value="2">sort by</option>
+                                <option value="3">sort by</option>
+                                <option value="4">sort by</option>
+                                <option value="5">sort by</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"
+                    style="margin: 5px;background: white;border-radius: 10px;padding-top: 10px;padding-bottom: 10px;"
+                    id="product_list">
+                    {% if product %}
+                    {% for product in product %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                        <div class="card product-item border p-2 mb-4">
+                            <div class="product-img position-relative g-transparent p-0"
+                                style="height: 200px;width: 100%;overflow: hidden !important;">
+                                <img class="img-fluid w-100"
+                                    style="width: 100% !important;height: 100% !important;object-fit: cover;"
+                                    src="{{product.product_images.url}}" alt="">
+                            </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4">
+                                <h5 class="text-truncate mb-3">{{product.pd_name}}</h5>
+                                <div class="text-danger ">
+                                    <h6>BDT {{product.price}}</h6>
+                                    <p style="line-height: 10px;" class="text-muted ml-2">&nbsp;<del>BDT
+                                            {{product.dis_price}}</del>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between bg-light">
+                                <button style="height: 40px;" class="btn btn-danger w-50 m-1 btn-sm text-white">Buy
+                                    Now</button>
+                                <button class="btn btn-dark btn-sm w-50 m-1 text-white">Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-center text-danger"><b>Product not Available</b></p>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Shop Product End -->
+        </div>
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+    $(".form-check-input").on('click', function () {
+        var _filterObj = {};
+        $(".form-check-input").each(function (index, ele) {
+            var _filterVal = $(this).val();
+            var _filterKey = $(this).data('filter');
+            _filterObj[_filterKey] = Array.from(document.querySelectorAll('input[data-filter=' + _filterKey + ']:checked')).map(function (el) {
+                return el.value;
+            });
+        });
+        $.ajax({
+            url: "/filter-data",
+            data: _filterObj,
+            dataType: 'json',
+            success: function (res) {
+                console.log(res.data)
+                $("#product_list").html(res.data)
+            },
+        });
+    });
+
+
+
+</script>
+
+{% endblock body %}
